@@ -1,16 +1,25 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BUILD_DIR = path.resolve(__dirname, 'build');
+const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = {
   entry: {
-    bundle: './src/index.js'
+    app: SRC_DIR + '/index.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: BUILD_DIR,
     filename: 'bundle.js'
   },
-  plugins: [new HtmlWebpackPlugin(), new ExtractTextPlugin('bundle.css')],
+  mode: 'development',
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './public/index.html'
+    }),
+    new ExtractTextPlugin('bundle.css')
+  ],
   module: {
     rules: [
       {
